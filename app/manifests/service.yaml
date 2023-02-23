@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-service
+  labels:
+    app: flaskapp
+spec:
+  type: LoadBalancer
+  selector:
+    app: flaskapp
+  ports:
+    # Port exposed to the host
+    - port: 6663
+      # Port inside the container
+      targetPort: 5000
