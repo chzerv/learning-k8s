@@ -1,7 +1,0 @@
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: envvar-configmap-v1
-data:
-  USER_NAME: "chzerv"

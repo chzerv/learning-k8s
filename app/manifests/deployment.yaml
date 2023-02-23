@@ -3,17 +3,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flask-deployment
-  labels:
-    app: flaskapp
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: flaskapp
   template:
-    metadata:
-      labels:
-        app: flaskapp
     spec:
       containers:
         - name: flaskapp
@@ -23,7 +18,7 @@ spec:
             - containerPort: 5000
           envFrom:
             - configMapRef:
-                name: envvar-configmap-v1
+                name: envvar-map
           resources:
             requests:
               memory: "500Mi"

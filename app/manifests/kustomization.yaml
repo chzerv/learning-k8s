@@ -1,0 +1,14 @@
+---
+resources:
+  - deployment.yaml
+  - service.yaml
+
+commonLabels:
+  app: flaskapp
+
+nameSuffix: -v1
+
+configMapGenerator:
+  - name: envvar-map
+    envs:
+      - "config.properties"
