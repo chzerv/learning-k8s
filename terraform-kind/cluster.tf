@@ -44,3 +44,9 @@ resource "null_resource" "load_image" {
     command = "kind load docker-image ${var.image} --name ${kind_cluster.cluster.name}"
   }
 }
+
+module "argocd" {
+  source       = "./modules/argocd"
+  cluster_cert = local.cluster_cert
+  host         = local.host
+}
