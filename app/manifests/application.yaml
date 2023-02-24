@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: flaskapp-argocd
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/chzerv/learning-k8s
+    targetRevision: HEAD
+    path: app/manifests
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: flaskapp-ns
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
