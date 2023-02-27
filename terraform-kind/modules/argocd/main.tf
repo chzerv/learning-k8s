@@ -9,11 +9,22 @@ data "http" "argocd-manifest" {
 }
 
 data "kubectl_file_documents" "argocd" {
-    content = data.http.argocd-manifest.response_body
+  content = data.http.argocd-manifest.response_body
 }
 
-resource "kubectl_manifest" "test" {
-    for_each  = data.kubectl_file_documents.argocd.manifests
-    yaml_body = each.value
-    override_namespace = kubernetes_namespace.argocd.metadata[0].name
+resource "kubectl_manifest" "argocd" {
+  for_each           = data.kubectl_file_documents.argocd.manifests
+  yaml_body          = each.value
+  override_namespace = kubernetes_namespace.argocd.metadata[0].name
+}
+
+data "kubernetes_secret" "argocd_initial_admin_password" {
+  metadata {
+    name      = "argocd-initial-admin-secret"
+    namespace = kubernetes_namespace.argocd.metadata[0].name
+  }
+}
+
+output "argocd_initial_admin_password" {
+  value = values(data.kubernetes_secret.argocd_initial_admin_password.data)
 }

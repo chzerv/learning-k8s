@@ -50,3 +50,7 @@ module "argocd" {
   cluster_cert = local.cluster_cert
   host         = local.host
 }
+
+output "argocd_initial_admin_password" {
+  value = nonsensitive(module.argocd.argocd_initial_admin_password[0])
+}
